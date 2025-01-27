@@ -1,41 +1,28 @@
-\documentclass[xcolor=svgnames,dvipdfmx,cjk,aspectratio=169]{beamer} 
-\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} 
+\documentclass[xcolor=svgnames,aspectratio=169]{beamer} 
 \usetheme{metropolis}
 \usefonttheme{professionalfonts}
 \setbeamertemplate{theorems}[numbered]
-
-% 必要なパッケージを追加
-\usepackage{amsthm}
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\usepackage{newtxtext}                     
+\usepackage{amsthm} 
 \usepackage{graphicx}
-\usepackage{mediabb}
 \usepackage{xcolor}
-\usepackage{bbm}
-\usepackage{ascmac}
-\usepackage{newtxtext}
+\usepackage{tikz}
 \everymath{\displaystyle}
-
-% 数学環境
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{proposition}[thm]{Proposition}
-\newtheorem{exam}[thm]{Example}
-\newtheorem{remark}[thm]{Remark}
-\newtheorem{question}[thm]{Question}
-\newtheorem{prob}[thm]{Problem}
-
+\usepackage{bbm}
+\usepackage{lmodern}
 \begin{document} 
 
-%%%%% 講演に関する情報 %%%%%
 \title{Cluster-robust inference:\\ \small{A guide to empirical practice}}
 \author{Naoki Eguchi}          
 \institute{Faculty of Medicine, Kyoto University} 
 \date{\today}
 
-%%%%% タイトルページ %%%%%
 \begin{frame}                  
-  \titlepage                     
+    \titlepage                     
 \end{frame}
 
-%%%%% セクションとスライド %%%%%
 \section{1. Introduction}
 
 \begin{frame}{English template}
@@ -130,6 +117,21 @@ Naoki Eguchi
 \section{9. Conclusion: A summary guide}
 
 \begin{frame}{9. Conclusion: A summary guide}
+\end{frame}
+
+\section{References}
+
+\begin{frame}{References}
+    \begin{itemize}
+        \item James G. MacKinnon, Morten \UTF{00D8}rregaard Nielsen, Matthew D. Webb, (2023). 
+        \textit{Cluster-robust inference: A guide to empirical practice}, Journal of Econometrics.
+        \item Alberto Abadie, Susan Athey, Guido W. Imbens, and Jeffrey M. Wooldridge, (2023).
+        \textit{When should you adjust standard errors for clustering?}, Quarterly Journal of Economics.
+        \item Joahua D. Angrist , J\"{o}rn-steffen Pischke, (2008).
+        \textit{Mostly Harmless Econometrics: An Empiricist's Companion}, Princeton University Press.
+        \item 川口康平,澤田真行 (2024). 
+        \textit{因果推論の計量経済学},日本評論社.
+    \end{itemize}
 \end{frame}
 
 \end{document}
