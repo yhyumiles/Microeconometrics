@@ -1,0 +1,95 @@
+\documentclass[xcolor=svgnames,aspectratio=169]{beamer} 
+\usetheme{metropolis}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{theorems}[numbered]
+\usepackage{amsthm} 
+\usepackage{graphicx}
+\usepackage{mediabb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\everymath{\displaystyle}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{question}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+\usepackage{bbm}
+\usepackage{ascmac}
+\usepackage{newtxtext}
+
+%%%%% Document Start %%%%%
+\begin{document}
+
+%%%%% Title Slide %%%%%
+\title{Synthetic Difference-in-Differences}
+\author{Naoki Eguchi}          
+\institute{Faculty of Medicine, Kyoto University} 
+\date{\today}
+
+\begin{frame}
+    \titlepage                     
+\end{frame}
+
+%%%%% Content Slides %%%%%
+\section{Introduction}
+
+\begin{frame}{Overview of SDID}
+\begin{itemize}
+    \item SDID achieves parallel trends by applying weights to approximate controls across both time and units.
+\end{itemize}
+\begin{figure}
+    \includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{2025-01-19_19.25.39}
+    \caption{Visualization of SDID concept}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Recap of DiD}
+\begin{itemize}
+    \item DiD Requirement
+    \begin{itemize}
+        \item Parallel trends assumption
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{An Application}
+\begin{frame}{Implementing SDID}
+\end{frame}
+
+\begin{frame}{The California Smoking Cessation Program}
+\end{frame}
+
+\section{Placebo Studies}
+\begin{frame}{Current Population Survey Placebo Study}
+\end{frame}
+
+\begin{frame}{Penn World Table Placebo Study}
+\end{frame}
+
+\section{Formal Results}
+\begin{frame}{Weighted Double-Differencing Estimators}
+\end{frame}
+
+\begin{frame}{Oracle and Adaptive Synthetic Control Weights}
+\end{frame}
+
+\section{Large-Sample Inference}
+\begin{frame}{Large-Sample Inference}
+\end{frame}
+
+\section{Related Work}
+\begin{frame}{Related Work}
+\end{frame}
+
+\section{References}
+\begin{frame}{References}
+\begin{itemize}
+\item Arkhangelsky, D., et al. (2021). 
+\textit{Synthetic Difference-in-Differences}, American Economic Review.
+\item 川口康平, 澤田真行 (2024). 
+\textit{因果推論の計量経済学}, 日本評論社.
+\end{itemize}
+\end{frame}
+
+\end{document}
