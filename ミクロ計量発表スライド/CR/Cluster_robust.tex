@@ -1,0 +1,137 @@
+\documentclass[xcolor=svgnames,aspectratio=169]{beamer} 
+\usetheme{metropolis}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{theorems}[numbered]
+\usepackage{luatexja}
+\usepackage{luatexja-fontspec}
+\usepackage{newtxtext}                     
+\usepackage{amsthm} 
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\everymath{\displaystyle}
+\usepackage{bbm}
+\usepackage{lmodern}
+\begin{document} 
+
+\title{Cluster-robust inference:\\ \small{A guide to empirical practice}}
+\author{Naoki Eguchi}          
+\institute{Faculty of Medicine, Kyoto University} 
+\date{\today}
+
+\begin{frame}                  
+    \titlepage                     
+\end{frame}
+
+\section{1. Introduction}
+
+\begin{frame}{English template}
+\begin{definition}[name]
+Naoki Eguchi
+\end{definition}
+\end{frame}
+
+\section{2. Cluster-robust variance estimators}
+
+\begin{frame}{2.1. The clustered regression model}
+\end{frame}
+
+\begin{frame}{2.2. Three feasible CRVEs}
+\end{frame}
+
+\section{3. Why and how to cluster}
+
+\begin{frame}{3.1. Modeling intra-cluster dependence}
+\end{frame}
+
+\begin{frame}{3.2. Do cluster fixed effects remove intra-cluster dependence?}
+\end{frame}
+
+\begin{frame}{3.3. At what level should we cluster?}
+\end{frame}
+
+\begin{frame}{3.4. Leverage and influence}
+\end{frame}
+
+\begin{frame}{3.5. Placebo regressions}
+\end{frame}
+
+\begin{frame}{3.6. Two-way clustering}
+\end{frame}
+
+\section{4. Asymptotic inference}
+
+\begin{frame}{4.1. Asymptotic theory: Large number of clusters}
+\end{frame}
+
+\begin{frame}{4.2. Asymptotic theory: small number of large clusters}
+\end{frame}
+
+\begin{frame}{4.3. When asymptotic influence can fail}
+\end{frame}
+
+\begin{frame}{4.3.1. Cluster heterogeneity}
+\end{frame}
+
+\begin{frame}{4.3.2. Treatment and few treated clusters}
+\end{frame}
+
+\begin{frame}{4.3.3. Testing several restrictions}
+\end{frame}
+
+\begin{frame}{4.4. Cluster-robust inference in nonlinear models}
+\end{frame}
+
+\section{5. Bootstrap inference}
+
+\begin{frame}{5.1. General principles of the bootstrap}
+\end{frame}
+
+\begin{frame}{5.2. Pairs cluster bootstrap}
+\end{frame}
+
+\begin{frame}{5.3. Wild cluster bootstrap}
+\end{frame}
+
+\section{6. Other inferential procedures}
+
+\begin{frame}{6.1. Alternative critical values}
+\end{frame}
+
+\begin{frame}{6.2. Randomization inference}
+\end{frame}
+
+\section{7. What should investigators report?}
+
+\begin{frame}{7. What should investigators report?}
+\end{frame}
+
+\section{8. Empirical example}
+
+\begin{frame}{8.1. Cluster heterogeneity}
+\end{frame}
+
+\begin{frame}{8.2. Placebo regressions for the empirical example}
+\end{frame}
+
+\section{9. Conclusion: A summary guide}
+
+\begin{frame}{9. Conclusion: A summary guide}
+\end{frame}
+
+\section{References}
+
+\begin{frame}{References}
+    \begin{itemize}
+        \item James G. MacKinnon, Morten \UTF{00D8}rregaard Nielsen, Matthew D. Webb, (2023). 
+        \textit{Cluster-robust inference: A guide to empirical practice}, Journal of Econometrics.
+        \item Alberto Abadie, Susan Athey, Guido W. Imbens, and Jeffrey M. Wooldridge, (2023).
+        \textit{When should you adjust standard errors for clustering?}, Quarterly Journal of Economics.
+        \item Joahua D. Angrist , J\"{o}rn-steffen Pischke, (2008).
+        \textit{Mostly Harmless Econometrics: An Empiricist's Companion}, Princeton University Press.
+        \item 川口康平,澤田真行 (2024). 
+        \textit{因果推論の計量経済学},日本評論社.
+    \end{itemize}
+\end{frame}
+
+\end{document}
