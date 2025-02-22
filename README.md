@@ -1,2 +1,2 @@
 # Microeconometrics
-These slides are presentation slides used in a Microeconometrics coursework at Kyoto Univ.
+These are presentation slides used in a Microeconometrics coursework at Kyoto University.
