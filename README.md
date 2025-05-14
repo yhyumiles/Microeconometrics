@@ -11,5 +11,8 @@ These are presentation slides used in a Microeconometrics coursework at Graduate
  Khashayar Khosravi (2021), Matrix Completion Methods for Causal Panel Data
  Models, Journal of the American Statistical Association.
 
-2. Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India, Econometrica.
+https://www.tandfonline.com/doi/full/10.1080/01621459.2021.1891924
 
+3. Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India, Econometrica.
+
+https://economics.mit.edu/sites/default/files/2022-08/2020.12%20HeterogTE-RE-v26.pdf
