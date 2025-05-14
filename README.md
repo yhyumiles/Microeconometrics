@@ -7,7 +7,7 @@ These are presentation slides used in a Microeconometrics coursework at Graduate
 
 ・reviewed papers
 
-1. Susan Athey, Mohsen Bayati, Nikolay Doudchenko, Guido Imbens and
+1. Susan Athey, Mohsen Bayati, Nikolay Doudchenko, Guido Imbens, and
  Khashayar Khosravi (2021), Matrix Completion Methods for Causal Panel Data
  Models, Journal of the American Statistical Association.
 
