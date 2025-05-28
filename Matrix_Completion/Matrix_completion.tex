@@ -8,6 +8,7 @@
 \usepackage{amsthm} 
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{tcolorbox}
 \usepackage{tikz}
 \everymath{\displaystyle}
 \usepackage{bbm}
@@ -112,25 +113,64 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Horizontal regression and unconfoundedness : thin matrix}
+\begin{frame}{Horizontal regression and unconfoundedness : thin matrix ($N\gg T$)}
     \begin{figure}
             \includegraphics[width=0.5\textwidth, height=0.4\textheight, keepaspectratio]{Horizontal.png} 
         \end{figure}
-    \begin{itemize}
-        \item 
-    \end{itemize}
+    \begin{enumerate}
+        \item Regress the last period outcome on the lagged outcomes. (among untreated)
+        \item Predict the missing POs using the estimated regression.
+        \[
+        \forall (i,T)\in\mathcal{M} , \ \hat{Y}_{iT}=\hat{\beta}_0+\sum_{t=1}^{T-1}\hat{\beta}_tY_{it}, \ \text{where} \ \ \hat{\beta}=\arg\min_{\beta} \sum_{i:(i,T) \in \mathcal{O} }(Y_{iT}-\beta_0-\sum_{t=1}^{T-1}\beta_tY_{it})^2.
+        \]
+    \end{enumerate}
+    →Nonparametrically, 
 \end{frame}
 
-\begin{frame}{Vertical regression and synthesis control : fat matrix}
+\begin{frame}{Vertical regression and synthesis control : fat matrix ($T\gg N$)}
     \begin{figure}
             \includegraphics[width=0.5\textwidth, height=0.5\textheight, keepaspectratio]{Vertical.png}
-        \end{figure}
+    \end{figure}
+    \begin{enumerate}
+        \item Regress the outcomes for treated unit prior to the treatment on the outcomes for the control units in the same periods.
+        \item Predct the missing POs using the estimated regression.
+        \[
+        \forall (N,t)\in\mathcal{M} , \ \hat{Y}_{Nt}=\hat{\gamma}_0+\sum_{i=1}^{N-1}\hat{\gamma}_iY_{it}, \ \text{where} \ \ \hat{\gamma}=\arg\min_{\gamma} \sum_{t:(N,t) \in \mathcal{O} }(Y_{Nt}-\gamma_0-\sum_{i=1}^{N-1}\gamma_iY_{it})^2.
+        \]
+    \end{enumerate}
+    →Vertical regression is generalization of ADH(2010) in that it relaxes two restrictions :
     \begin{itemize}
-        \item 
+        \item the coefficients $\hat{\gamma}$ are nonnegative. (Interpretability ; What is a negative weight?)
+        \item the intercept in this regression is $0$. (This is seen to be plausible in recent literatures.)
     \end{itemize}
 \end{frame}
 
 \section{Matrix Completion}
+
+\begin{frame}{Model}
+    \begin{itemize}
+        \item Under no covariates, we model the $N\times T$ matrix of complete matrix $\mathbf{Y}$ as
+        \[
+        \mathbf{Y}=\mathbf{L^*}+\mathbf{\epsilon}, \ \text{where} \ \ \E[\mathbf{\epsilon}|\mathbf{L^*}]=0.
+        \]
+    \begin{tcolorbox}[colframe=lightgray,title=Assumption 1]
+        \begin{itemize}
+            \item $\mathbf{\epsilon}$ is independent of $\mathbf{L^*}$
+            \item The element of $\mathbf{\epsilon}$ are $\sigma-sub-Gaussian$ and independent each other.
+            $\Leftrightarrow \forall t, \ \E[\exp (t\epsilon)]\leq \exp (\frac{\sigma^2t^2}{2}).$
+        \end{itemize}
+    \end{tcolorbox}
+        \item The goal is to estimate the matrix $\mathbf{L^*}$. (low-rank assumption) 
+    
+        →Note that two types\footnote{Interactive fixed effectも低ランクとしていいが, rankが明示的でないため具体的には考えない.} of fixed effects are included.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
 
 \section{Theoritical Bounds \\ for the Estimation Error}
 
