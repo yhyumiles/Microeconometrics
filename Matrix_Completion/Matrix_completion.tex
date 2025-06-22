@@ -226,27 +226,97 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \begin{figure}
-            \includegraphics[width=0.5\textwidth, height=0.5\textheight, keepaspectratio]{MC-NNM.png}
-    \end{figure}
+\begin{frame}{MC-NNM estimator}
+    \begin{itemize}
+        \item Nuclear norm matrix completion
+        \begin{align*}
+        (R_\lambda^{\mathrm{mc\text{-}nnm}},\,
+         \mathbf{A}_\lambda^{\mathrm{mc\text{-}nnm}},\,
+         \mathbf{B}_\lambda^{\mathrm{mc\text{-}nnm}},\,
+         \gamma_\lambda^{\mathrm{mc\text{-}nnm}},\,
+         \delta_\lambda^{\mathrm{mc\text{-}nnm}})& \\
+        = \arg\min_{R,A,B,\gamma,\delta}
+           \Bigl\{Q(\mathbf{Y};R,\mathbf{A},\mathbf{B},\gamma,\delta)
+        &+\frac{\lambda}{2}\|\mathbf{A}\|_F^2
+           +\frac{\lambda}{2}\|\mathbf{B}\|_F^2\Bigr\}.
+        \end{align*}
+        \item \textbf{Fact 3.} $\|\mathbf{L}\|_*
+        = \min_{\mathbf{A},\mathbf{B}:\,\mathbf{L}=\mathbf{A}\mathbf{B}'}
+          \frac{1}{2}\bigl(\|\mathbf{A}\|_F^2 + \|\mathbf{B}\|_F^2\bigr).$
+  \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \begin{figure}
-            \includegraphics[width=0.5\textwidth, height=0.5\textheight, keepaspectratio]{Hr_Vt.png}
-    \end{figure}
+\begin{frame}{Horizontal regression (thin matrix, $N>T$)}
+  \begin{itemize}
+    \item Horizontal regression estimator
+      \begin{align*}
+        &(R^{hr},\,\mathbf{A}^{hr},\,\mathbf{B}^{hr},\,\gamma^{hr},\,\delta^{hr})
+        = \arg\min_{R,A,B,\gamma,\delta}
+           Q\bigl(\mathbf{Y};R,\mathbf{A},\mathbf{B},\gamma,\delta\bigr),\\
+        &\text{subject to}\quad
+        R = T-1,\quad
+        \mathbf{A} = \begin{pmatrix}\mathbf{Y}_0 \\ y_2^\top\end{pmatrix},\quad
+        \gamma = 0,\quad
+        \delta_1 = \cdots = \delta_{T-1} = 0.
+      \end{align*}
+    \item The solution for $\mathbf{B}$ is
+    \[
+      \mathbf{B}^{hr\top}
+      = \begin{pmatrix} E_{T-1} & \hat\beta \end{pmatrix},
+      \quad
+      (\hat\beta,\hat\delta_T)
+      = \arg\min_{\beta,\delta_T}
+        \sum_{i=1}^{N-1}
+        \bigl(Y_{iT} - \delta_T - \sum_{t=1}^{T-1}\beta_t\,Y_{it}\bigr)^2.
+    \]
+  \end{itemize}
 \end{frame}
 
+
 \begin{frame}
-    \begin{figure}
-            \includegraphics[width=0.5\textwidth, height=0.5\textheight, keepaspectratio]{SC.png}
-    \end{figure}
+    \begin{itemize}
+        \item Vertical regression, defined if $T>N$ : fat matrix
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Another methods}
+    \begin{figure}[h]
+  \centering
+  \begin{minipage}{0.43\columnwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.95\textheight, keepaspectratio]{SC.png}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.43\columnwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.95\textheight, keepaspectratio]{Vt_EN.png}
+  \end{minipage}
+  \end{figure}
 \end{frame}
 
 \section{Theoritical Bounds \\ for the Estimation Error}
 
+\begin{frame}{Estimation error}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
+
 \section{Two illustrations}
+
+\begin{frame}{Comparing each method}
+    \begin{itemize}
+        \item In a real data matrix $\mathbf{Y}$ where \alert{no units is treated}, we choose units as "hypothetical treated" units (=regard as missing) and aim to predict (impute) their value.
+        → Technically, compare the average root-mean-squared-error(RMSE) to assess which of the algorithm generally perform well.
+        \item The compared estimators (algorithms) are as follows.
+        \begin{itemize}
+            \item DiD : 2回差分によりcounterfactualを補完する
+            \item VT-EN : elastics netでvertical regression functionを作り、その推定値で補完
+            \item HR-EN : elastics netでhorizontal regression functionを作り、その推定値で補完
+            \item SC-ADH : classical approach to construct "synthetic control".
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 \section{References}
 
