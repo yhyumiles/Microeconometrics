@@ -163,13 +163,66 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \end{tcolorbox}
         \item The goal is to estimate the matrix $\mathbf{L^*}$. (low-rank assumption) 
     
-        →Note that two types\footnote{Interactive fixed effectも低ランクとしていいが, rankが明示的でないため具体的には考えない.} of fixed effects are included.
+        →Note that two types\footnote{これら以外にもInteractive fixed effectといったあらゆるfactorを"少数まで"許容する} of fixed effects are included.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{MC-NNM (Matrix Completion with Nuclear Norm Minimization) estimator}
     \begin{itemize}
+        \item MC-NNM estimator for $\mathbf{L^*}$ is given by $\mathbf{\hat{L}}+\hat{\Gamma}\mathbf{1}_T' + \mathbf{1}_N\hat{\Delta}'$
+        \[
+        (\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta})=\arg \min_{\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta}} 
+        \{
+            \frac{1}{|\mathcal{O} |}  ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{L}-\Gamma}\mathbf{1}_T'-\mathbf{1}_N\Delta')||_F^2+\lambda||L||_*
+        \}
+        \]
+        \begin{itemize}
+            \item $\Gamma\in\R^N$ : unit-varying (and time-fixed) effect (individual effect)
+            \item $\Delta\in\R^T$ : time-varying (and unit-fixed) effect (time effect) 
+            \item matrix indicator function : $\mathbf{P_{\mathcal{O} }}(\mathbf{A})=
+            \begin{cases}
+                A_{it} & \text{if} \ (i,t)\in\mathcal{O} \\ 0 & \text{if} \ (i,t) \notin \mathcal{O}  
+            \end{cases}$ \ (NA is regarded as $0$)
+            \item Frobenius norm : $||\mathbf{A}||_F^2=\sum_{i=1}^N\sum_{t=1}^T A_{it}^2$ \ (行列版のmean squared errorを計算している)
+        \end{itemize}
+        \item Regularization term $\lambda||L||_*$ leads to \alert{the low rank of $\mathbf{L}$}. \\
+        → minimize $\lambda||L||_*$ $\Leftrightarrow $ the sparsity of Singular value $\sigma_i(\mathbf{L})(>0)$ $\Leftrightarrow $ low rank of $\mathbf{L}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item \textbf{Fact 1.} (Singular value decomposition) \textit{Every real matrix $L\in\R^N\times \R^T$ can be decomposed using a onthogonal matrix $\mathbf{S}\in \R^N\times \R^{\min(N,T)},\mathbf{R}\in\R^T\times \R^{\min(N,T)}$ by}
+        \[
+        \mathbf{L}=\mathbf{S}\mathbf{\Sigma}\mathbf{R'}, \text{where} \ \mathbf{\Sigma}=\text{diag}(\sigma_1,\dots\sigma_{\min(N,T)}), \mathbf{S'S=I_{\min(N,T)}=R'R}
+        \]
+        \item \textbf{Fact 2.} \textit{The number of non-zero singular value = rank $\mathbf{L}$}
+        \begin{itemize}
+            \item Nuclear norm : $||L||_*=\sum_{i=1}^{\min(N,T)} \sigma_i(\mathbf{L})$ \\
+            → minimize $\lambda||L||_*$ $\Leftrightarrow $ the sparsity of Singular value $\sigma_i(\mathbf{L})(>0)$ $\Leftrightarrow $ low rank of $\mathbf{L}$
+        \end{itemize}
+        \item Since the rank of $\mathbf{L}$ corresponds to \alert{the number of factor}, this assumption of low rank is quite plausible. 
+        \item Although the law rank matrix CAN include two fixed effects, these "strong" factors are separately estimated for improving the quality of the practical imputations.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algorithm for calculating $\hat{\mathbf{L}}$}
+    \begin{itemize}
+        \item For simplicity, assume that there are no fixed effects. (only estimate $\mathbf{L}$)
         \item 
+    \end{itemize}
+\end{frame}
+
+\section{The relationship with horizontal and vertical regressions}
+
+\begin{frame}
+    \begin{itemize}
+        \item Let the estimand $\mathbf{Y}$ partition as $
+        \begin{pmatrix} \mathbf{Y_0} & \mathbf{y_1} \\ \mathbf{y_2}' & ? \end{pmatrix}$, \\ where $\mathbf{Y_0}\in\R^{N-1}\times \R^{T-1}, \mathbf{y_1}\in\R^{N-1}, \mathbf{y_2}\in\R^{T-1}$.
+        \item For a given positive integer $R$, define an $N\times R$ matrix $\mathbf{A}$, an $T\times R$ matrix $\mathbf{B}$, a $N$-dim. vector $\gamma$ and a $R$-dim. vector $\delta$, then, the objective function w.r.t. MSE is
+        \[
+        Q(\mathbf{Y}; R, \mathbf{A}, \mathbf{B}, \gamma, \delta)=\frac{1}{|\mathcal{O} |} ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{AB'}-\gamma}\mathbf{1}_T'-\mathbf{1}_N\delta')||_F^2
+        \]
     \end{itemize}
 \end{frame}
 
