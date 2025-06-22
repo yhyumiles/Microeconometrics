@@ -306,7 +306,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \begin{frame}{Comparing each method}
     \begin{itemize}
-        \item In a real data matrix $\mathbf{Y}$ where \alert{no units is treated}, we choose units as "hypothetical treated" units (=regard as missing) and aim to predict (impute) their value.
+        \item In a real data matrix $\mathbf{Y}$ where \alert{no units is treated}, we choose units as "hypothetical treated" units (=regard as missing) and aim to predict (impute) their value. \\
         → Technically, compare the average root-mean-squared-error(RMSE) to assess which of the algorithm generally perform well.
         \item The compared estimators (algorithms) are as follows.
         \begin{itemize}
@@ -314,7 +314,20 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
             \item VT-EN : elastics netでvertical regression functionを作り、その推定値で補完
             \item HR-EN : elastics netでhorizontal regression functionを作り、その推定値で補完
             \item SC-ADH : classical approach to construct "synthetic control".
+            \item MC-NNM : 本日の主役
         \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ADH(2010): California smoking data}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Stock market data}
+    \begin{itemize}
+        \item 
     \end{itemize}
 \end{frame}
 
