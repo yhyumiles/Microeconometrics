@@ -321,13 +321,32 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \begin{frame}{ADH(2010): California smoking data}
     \begin{itemize}
-        \item 
+        \item $N=38, T=31$
+        \begin{itemize}
+            \item Simultaneous adoption : Let randomly selected $N_t=8$ units "treated" in period $T_0+1$.
+            \item Staggered adoption : Let randomly selected $N_t=35$ units "treated" in some periods after period $T$.
+            \begin{figure}
+            \includegraphics[width=0.7\textwidth, height=0.4\textheight, keepaspectratio]{ADH.png}
+            \end{figure}
+        \end{itemize}
+        \item (a) : VT-EN performs well on the whole, DiD is poor.
+        \item (b) : MC-NNM is superior (large sample is favorable!), and VT-EN is generally poor.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Stock market data}
     \begin{itemize}
         \item 
+    \end{itemize}
+\end{frame}
+
+\section{Final marks}
+
+\begin{frame}{Summary nad Conclusion}
+    \begin{itemize}
+        \item Matrix completion is a imputing method for the missing $Y_{it}(0)$ where $(i,t)\in \mathcal{M}$.
+        \item MC-NNM estimator is the generalization of many estimators such as DiD, ADH-SC, vertical or horizontal (penalized) regression , and interactive fixed effect model.
+        \item Practically, this estimator performs well with large $N$ and $T$, and allows for a relatively large number of factors.
     \end{itemize}
 \end{frame}
 
