@@ -35,13 +35,15 @@
 
 \section{Introduction}
 
-\begin{frame}{Today's Agenda ; Keyword : Imputation}
+\begin{frame}{What is "matrix completion" ?}
     \begin{itemize}
-        \item
+        \item Matrix completion is an imputation method for the missing in the matrix.
+        \item 
+        \item Applying this idea to panel data analysis, this method is seen to a generalization of many model-based (factor-regression-based) panel methods.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Imputation}
+\begin{frame}{Where to impute}
     \begin{itemize}
         \item As many panel data methods, we want to know ATT : $\E[Y_{it}(1)-Y_{it}(0)|W_i=1]$.
         \item Thus, it boils down to estimate (impute) the counterfactual $Y_{it}(0)$.
@@ -96,7 +98,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 \end{pmatrix}$ (← Matrix!!)
         \item $W_{it}=
         \begin{cases}
-            1 & \text{if} \ (i,t)\in \mathcal{M} \\ 0 & \text{if} \ (i,t) \in\mathcal{O} 
+            1 & \text{if} \ (i,t)\in \mathcal{M} : \text{Missing indice} \\ 0 & \text{if} \ (i,t) \in\mathcal{O} : \text{Observed indice as training data}
         \end{cases}$
     \end{itemize}
 \end{frame}
@@ -251,13 +253,14 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \section{The relationship with horizontal and vertical regressions}
 
-\begin{frame}
+\begin{frame}{Interpretation as generalization}
     \begin{itemize}
+        \item For simplicity, we assume when only one missing $Y_{NT}(0)$ exists i.e. $\mathcal{M}=(N,T)$ 
         \item Let the estimand $\mathbf{Y}$ partition as $
-        \begin{pmatrix} \mathbf{Y_0} & \mathbf{y_1} \\ \mathbf{y_2}' & ? \end{pmatrix}$, \\ where $\mathbf{Y_0}\in\R^{N-1}\times \R^{T-1}, \mathbf{y_1}\in\R^{N-1}, \mathbf{y_2}\in\R^{T-1}$.
+        \begin{pmatrix} \mathbf{Y_0} & \mathbf{y_1} \\ \mathbf{y_2}^{\mathsf{T}} & ? \end{pmatrix}$, \\ where $\mathbf{Y_0}\in\R^{N-1}\times \R^{T-1}, \mathbf{y_1}\in\R^{N-1}, \mathbf{y_2}\in\R^{T-1}$.
         \item For a given positive integer $R$, define an $N\times R$ matrix $\mathbf{A}$, an $T\times R$ matrix $\mathbf{B}$, a $N$-dim. vector $\gamma$ and a $R$-dim. vector $\delta$, then, the objective function w.r.t. MSE is
         \[
-        Q(\mathbf{Y}; R, \mathbf{A}, \mathbf{B}, \gamma, \delta)=\frac{1}{|\mathcal{O} |} ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{AB'}-\gamma}\mathbf{1}_T'-\mathbf{1}_N\delta')||_F^2
+        Q(\mathbf{Y}; R, \mathbf{A}, \mathbf{B}, \gamma, \delta)=\frac{1}{|\mathcal{O} |} ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{AB}^{\mathsf{T}}-\gamma}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\delta^{\mathsf{T}})||_F^2
         \]
     \end{itemize}
 \end{frame}
@@ -279,19 +282,21 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \item \textbf{Fact 3.} $\|\mathbf{L}\|_*
         = \min_{\mathbf{A},\mathbf{B}:\,\mathbf{L}=\mathbf{A}\mathbf{B}'}
           \frac{1}{2}\bigl(\|\mathbf{A}\|_F^2 + \|\mathbf{B}\|_F^2\bigr).$
+        \item In second and third terms, we regularize $\mathbf{A, B}$ so that the minimization problem has a unique solution. \\
+        → Compared with other methods, there is a big differnece in that MC-NNM does not restrict the form of the matrix but just regularize it in a data-driven manner.
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Horizontal regression (thin matrix, $N>T$)}
   \begin{itemize}
-    \item Horizontal regression estimator
+    \item Horizontal regression estimator, defined if $N>T$ : thin matrix
       \begin{align*}
         &(R^{hr},\,\mathbf{A}^{hr},\,\mathbf{B}^{hr},\,\gamma^{hr},\,\delta^{hr})
         = \arg\min_{R,A,B,\gamma,\delta}
            Q\bigl(\mathbf{Y};R,\mathbf{A},\mathbf{B},\gamma,\delta\bigr),\\
         &\text{subject to}\quad
         R = T-1,\quad
-        \mathbf{A} = \begin{pmatrix}\mathbf{Y}_0 \\ y_2^\top\end{pmatrix},\quad
+        \mathbf{A} = \begin{pmatrix}\mathbf{Y}_0 \\ \mathbf{y}_2^\top\end{pmatrix},\quad
         \gamma = 0,\quad
         \delta_1 = \cdots = \delta_{T-1} = 0.
       \end{align*}
@@ -305,13 +310,35 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \sum_{i=1}^{N-1}
         \bigl(Y_{iT} - \delta_T - \sum_{t=1}^{T-1}\beta_t\,Y_{it}\bigr)^2.
     \]
+    \item Restrict the form of $\mathbf{A}$ and (of course) assume no individual effect ($\gamma=0$).
   \end{itemize}
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}{Vertical regression (fat matrix, $T>N$)}
     \begin{itemize}
-        \item Vertical regression, defined if $T>N$ : fat matrix
+        \item Vertical regression estimator, defined if $T>N$ : fat matrix
+      \begin{align*}
+        &(R^{vt},\,\mathbf{A}^{vt},\,\mathbf{B}^{vt},\,\gamma^{vt},\,\delta^{vt})
+        = \arg\min_{R,A,B,\gamma,\delta}
+           Q\bigl(\mathbf{Y};R,\mathbf{A},\mathbf{B},\gamma,\delta\bigr),\\
+        &\text{subject to}\quad
+        R = N-1,\quad
+        \mathbf{B}^{\mathsf{T}} = \begin{pmatrix}\mathbf{Y}_0 & \mathbf{y}_1\end{pmatrix},\quad
+        \gamma_1 = \cdots = \gamma_{N-1} =0 ,\quad
+        \delta= 0.
+      \end{align*}
+      \item The solution for $\mathbf{A}$ is
+    \[
+      \mathbf{A}^{\text{vt}}
+      = \begin{pmatrix} E_{N-1} \\ \hat\alpha \end{pmatrix},
+      \quad
+      (\hat\alpha,\hat\gamma_N)
+      = \arg\min_{\alpha,\gamma_N}
+        \sum_{t=1}^{T-1}
+        \bigl(Y_{Nt} - \gamma_N - \sum_{i=1}^{N-1}\alpha_i\,Y_{it}\bigr)^2.
+    \]
+    \item Restrict the form of $\mathbf{B}$ and (of course) assume no time effect ($\delta=0$).
     \end{itemize}
 \end{frame}
 
