@@ -156,7 +156,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \]
     \begin{tcolorbox}[colframe=lightgray,title=Assumption 1]
         \begin{itemize}
-            \item $\mathbf{\epsilon}$ is independent of $\mathbf{L^*}$
+            \item $\mathbf{\epsilon}$ is independent of $\mathbf{L^*}$ (strict exogeneity)
             \item The element of $\mathbf{\epsilon}$ are $\sigma-sub-Gaussian$ and independent each other.
             $\Leftrightarrow \forall t, \ \E[\exp (t\epsilon)]\leq \exp (\frac{\sigma^2t^2}{2}).$
         \end{itemize}
@@ -171,9 +171,9 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \begin{itemize}
         \item MC-NNM estimator for $\mathbf{L^*}$ is given by $\mathbf{\hat{L}}+\hat{\Gamma}\mathbf{1}_T' + \mathbf{1}_N\hat{\Delta}'$
         \[
-        (\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta})=\arg \min_{\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta}} 
+        (\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta})=\arg \min_{\mathbf{L},\Gamma,\Delta} 
         \{
-            \frac{1}{|\mathcal{O} |}  ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{L}-\Gamma}\mathbf{1}_T'-\mathbf{1}_N\Delta')||_F^2+\lambda||L||_*
+            \frac{1}{|\mathcal{O} |}  ||\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\mathbf{L}-\Gamma}\mathbf{1}_T'-\mathbf{1}_N\Delta')||_F^2+\lambda||\mathbf{L}||_*
         \}
         \]
         \begin{itemize}
@@ -216,7 +216,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         → You can see elements with a small singular value (=weak factor) will be vanished.
         \item We perform this minimization over and over until the matrix converges.
         \begin{itemize}
-            \item Define $\text{shrink}_{\lambda}(\mathbf{A})=\mathbf{S\tilde{\Sigma}R^\mathsf{T}}$ and start with the initial choice $\mathbf{L_1}(\lambda, \mathcal{O})=\mathbf{P}_\mathcal{O} (\mathbf{Y})$ (The missing starts $0$.)
+            \item Define $\text{shrink}_{\lambda}(\mathbf{A})=\mathbf{S\tilde{\Sigma}R^\mathsf{T}}$ and start with the initial choice $\mathbf{L_1}(\lambda, \mathcal{O})=\mathbf{P}_\mathcal{O} (\mathbf{Y})$ (The missing starts with $0$.)
             \[
             \mathbf{L}_{k+1}(\lambda,\mathcal{O} )=\text{shrink}_{\frac{\lambda|\mathcal{O} |}{2}}\{\mathbf{P}_{\mathcal{O} }(\mathbf{Y})+\mathbf{P}_{\mathcal{O} }^\mathsf{T}(\mathbf{L}_k(\lambda,\mathcal{O} ))\}
             \]
@@ -382,7 +382,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \begin{itemize}
         \item Matrix completion is a imputing method for the missing $Y_{it}(0)$ where $(i,t)\in \mathcal{M}$.
         \item MC-NNM estimator is the generalization of many estimators such as DiD, ADH-SC, vertical or horizontal (penalized) regression , and interactive fixed effect model.
-        \item The critical differnce with previus estimators is that MC-NNM \alert{holistically restricts} the factors by regularization woth sparsity
+        \item The critical differnce with previus estimators is that MC-NNM \alert{holistically restricts} the factors by regularization with sparsity (Intrinsic factor vs Explicit factor)
         \item Practically, this estimator performs well with large $N$ and $T$, and allows for a relatively large number of factors.
         \item 
     \end{itemize}
@@ -393,7 +393,8 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 \begin{frame}{References}
     \begin{itemize}
         \item Susan Athey, Mohsen Bayati, Nikolay Doudchenko, Guido Imbens, and Khashayar Khosravi (2021), \textit{Matrix Completion Methods for Causal Panel Data Models}, Journal of the American Statistical Association.
-        \item Licheng Liu, Ye Wang, Yiqing Xu (2024), \textit{A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data},  American Journal of Political Science.
+        \item Licheng Liu, Ye Wang, and Yiqing Xu (2024), \textit{A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data},  American Journal of Political Science.
+        \item Jungjun Choi and Ming Yuan(2024), \textit{Matrix Completion When Missing Is Not at Random and Its Applications in Causal Panel Data Models}, Journal of the American Statistical Association.
         \item Martin J. Wainwright (2019), \textit{High-Dimensional Statistics}, Cambridge University Press. (mainly Chapter 10)
         \item 冨岡亮太 (2015), スパース性に基づく機械学習, 講談社.
         \item 川口康平,澤田真行 (2024), 因果推論の計量経済学,日本評論社.
