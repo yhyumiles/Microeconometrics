@@ -54,33 +54,6 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{What is "Matrix Completion"?}
-    \begin{itemize}
-        \item Matrix completion (MC) is an imputation method for missing entries in a data matrix.
-        
-        \item In Principal Component Analysis (PCA), given the number of components $M$, we approximate a true data matrix $\mathbf{Y}\in\mathbb{R}^{I\times J}$ by the product of low-rank matrices $\mathbf{A}\in\mathbb{R}^{I\times M}$ and $\mathbf{B}\in\mathbb{R}^{M\times J}$:
-        \[
-        \min_{\mathbf{A},\,\mathbf{B}}\left\{
-        \sum_{i=1}^{I}\sum_{j=1}^{J}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
-        \right\}
-        \]
-
-        \item If there are missing entries, we solve the approximation problem using only observed entries $(i,j)\in\mathcal{O}$:
-        \[
-        \min_{\mathbf{A},\,\mathbf{B}}\left\{
-        \sum_{(i,j)\in \mathcal{O}}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
-        \right\}
-        \]
-        Then, the missing entries $(i,j)\in\mathcal{M}$ can be imputed by:
-        \[
-        \hat{Y}_{ij}=\sum_{m=1}^{M}\hat{a}_{im}\hat{b}_{mj}
-        \]
-
-        \item Applying this idea to panel data analysis, MC-based methods generalize many factor-regression-based panel data models.
-    \end{itemize}
-\end{frame}
-
-
 \begin{frame}{Where to impute}
     \begin{itemize}
         \item As many panel data methods, we want to know ATT : $\E[Y_{it}(1)-Y_{it}(0)|W_i=1]$.
