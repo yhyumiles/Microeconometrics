@@ -172,11 +172,11 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \begin{frame}{MC-NNM (Matrix Completion with Nuclear Norm Minimization) estimator}
     \begin{itemize}
-        \item MC-NNM estimator for $\mathbf{L^*}$ is given by $\mathbf{\hat{L}}+\hat{\Gamma}\mathbf{1}_T' + \mathbf{1}_N\hat{\Delta}'$
+        \item MC-NNM estimator for $\mathbf{L^*}$ is given by $\mathbf{\hat{L}}+\hat{\Gamma}\mathbf{1}_T^{\mathsf{T}} + \mathbf{1}_N\hat{\Delta}^{^\mathsf{T}}$
         \[
         (\mathbf{\hat{L}}, \hat{\Gamma}, \hat{\Delta})=\arg \min_{\mathbf{L},\Gamma,\Delta} 
         \{
-            \frac{1}{|\mathcal{O} |}  ||\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\mathbf{L}-\Gamma}\mathbf{1}_T'-\mathbf{1}_N\Delta')||_F^2+\lambda||\mathbf{L}||_*
+            \frac{1}{|\mathcal{O} |}  ||\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\mathbf{L}-\Gamma}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\Delta^{\mathsf{T}})||_F^2+\lambda||\mathbf{L}||_*
         \}
         \]
         \begin{itemize}
@@ -237,7 +237,14 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \begin{frame}
     \begin{itemize}
-        \item For the case with fixed effects,  
+        \item For the case with fixed effects, we replace $\mathbf{P}_{\mathcal{O} }(\mathbf{Y})$ with $\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\Gamma_k}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\Delta_k^{\mathsf{T}})$
+        \item After each iteration to obtain $\hat{\mathbf{L}}_{k+1}$, we can estimate $\Gamma_{k+1}$ and $\Delta_{k+1}$ by using the first-order conditions.
+        \begin{itemize}
+            \item More specifically, after estimating $\hat{\mathbf{L}}_{k+1}$, the objective function is as the quadratic form wrt. $\Gamma_k, \Delta_k$, so we additionally minimize it and renew $\Gamma_{k+1}, \Delta_{k+1}$.
+            \item Finally, replace the $\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\Gamma_k}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\Delta_k^{\mathsf{T}})$ with $\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\Gamma_{k+1}}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\Delta_{k+1}^{\mathsf{T}})$, \\ then proceed the algorithm to obtain $\hat{\mathbf{L}}_{k+2}$.
+        \end{itemize}
+        \item we can interpert the term $\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\Gamma_k}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\Delta_k^{\mathsf{T}})$ as an \alert{invariant (fixed)} factor term.
+        \item Actually, this separation of two FEs makes practical imputation greatly improved.
     \end{itemize}
 \end{frame}
 
@@ -248,7 +255,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \item Instead, using resampling method, we see the fluctulation of the imputed matrix and construct CI like premutation methods in ADH-synthetic control method.
         \begin{itemize}
             \item Randomly select the subset $\mathcal{O}_k$ of $\mathcal{O} $ for $k=1,...,K$.
-            \item Then, using the sample in $ \mathcal{O}_k$, cauculate MC-NNM estimator $\hat{\mathbf{L}}^{(k)}$.
+            \item Then, using the sample in $ \mathcal{O}_k$, calculate MC-NNM estimator $\hat{\mathbf{L}}^{(k)}$.
             \item Finally, we construct a pointwise CI for $\{\hat{L}_{it}^{(k)}\}$.
         \end{itemize}
         \item However, according to Choi and Yuan(2024) which is the extended literature of Athey et al.(2021), their \alert{debiased} estimator for $\mathbf{L}^*$ is \alert{asymptotic normal} (but pointwisely).
@@ -367,7 +374,20 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 
 \begin{frame}{Estimation error}
     \begin{itemize}
-        \item 
+        \item Define $p_c$ to be a minimiun expected proportion of control (never-treated) unit.
+        \[
+        p_c\equiv \min_{1\leq i\leq N}\pi_T^{(i)}, \text{where} \ \pi_T^{(i)}=\mathbb{P}(t_i=T)
+        \]
+        \begin{tcolorbox}[colframe=lightgray,title=Assumption 2]
+        \begin{itemize}
+            \item $p_c$ is sufficiently large even as $N,T \to \infty$ with $N\geq T$. (remained control units)
+            \[
+            p_c \gtrsim \frac{\log^{3/2}(N+T)}{\sqrt{T}} \vee \frac{\sqrt{T}\log^{3/2}(N+T)}{N}
+            \]
+            \item True matrix $\mathbf{{L}}^*$ is a low rank.
+        \end{itemize}
+        \end{tcolorbox}
+        \item Under this assumption, $\frac{||\mathbf{{L}^*-\mathbf{\hat{L}}}||_F}{\sqrt{NT}}$ has an upper bound with a high probability ($\mathbb{P}=1-\frac{2}{(N+T)^2}$), then, MC-NNM estimator has a \alert{consisitency}.
     \end{itemize}
 \end{frame}
 
