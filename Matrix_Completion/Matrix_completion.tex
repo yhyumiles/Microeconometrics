@@ -209,7 +209,43 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 \begin{frame}{Algorithm for calculating $\hat{\mathbf{L}}$}
     \begin{itemize}
         \item For simplicity, assume that there are no fixed effects. (only estimate $\mathbf{L}$)
-        \item 
+        \item \textbf{Fact 3.} \textit{For $\mathbf{A=S\Sigma R}$, the minimizer is obtained analytically.}
+        \[
+        \mathbf{S\tilde{\Sigma}R^\mathsf{T}}=\arg\min_{\mathbf{A}}\{\frac{1}{2}||\mathbf{L-A}||_F^2+\lambda||\mathbf{A}||_*\}, \text{where} \ \tilde{\Sigma}=\text{diag}(\{\max(\sigma_i(\mathbf{A})-\lambda,0)\}_i)
+        \]
+        → You can see elements with a small singular value (=weak factor) will be vanished.
+        \item We perform this minimization over and over until the matrix converges.
+        \begin{itemize}
+            \item Define $\text{shrink}_{\lambda}(\mathbf{A})=\mathbf{S\tilde{\Sigma}R^\mathsf{T}}$ and start with the initial choice $\mathbf{L_1}(\lambda, \mathcal{O})=\mathbf{P}_\mathcal{O} (\mathbf{Y})$ (The missing starts $0$.)
+            \[
+            \mathbf{L}_{k+1}(\lambda,\mathcal{O} )=\text{shrink}_{\frac{\lambda|\mathcal{O} |}{2}}\{\mathbf{P}_{\mathcal{O} }(\mathbf{Y})+\mathbf{P}_{\mathcal{O} }^\mathsf{T}(\mathbf{L}_k(\lambda,\mathcal{O} ))\}
+            \]
+            \item $\mathbf{P_{\mathcal{O} }}(\mathbf{A})=
+            \begin{cases}
+                A_{it} & \text{if} \ (i,t)\in\mathcal{O} \\ 0 & \text{if} \ (i,t) \notin \mathcal{O}  
+            \end{cases}$ \ , \quad $\mathbf{P_{\mathcal{O} }^\mathsf{T}}(\mathbf{A})=
+            \begin{cases}
+                0 & \text{if} \ (i,t)\in\mathcal{O} \\ A_{it} & \text{if} \ (i,t) \notin \mathcal{O}  
+            \end{cases}$
+            \item The limiting matrix $\hat{\mathbf{L}}(\lambda,\mathcal{O} )=\lim_{k\to \infty} \mathbf{L}_k(\lambda,\mathcal{O} )$ is MC-NNM estimator given $\lambda$.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item For the case with fixed effects,  
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Inference : CV and CI}
+    \begin{itemize}
+        \item The optimal value of $\lambda$ is selected through \alert{cross-validation}.
+        \begin{itemize}
+            \item 
+        \end{itemize}
+        \item The theory of asymptotic distribution of $\mathbf{L^*}-\mathbf{\hat{L}}$ to construct CI has not yet developed.
+        \item Instead, using resampling method, we see the fluctulation of the imputed matrix and construct CI like premutation methods in ADH-synthetic control method.
     \end{itemize}
 \end{frame}
 
@@ -294,12 +330,6 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
   \end{figure}
 \end{frame}
 
-\begin{frame}{Inference : CV and CI}
-    \begin{itemize}
-        \item
-    \end{itemize}
-\end{frame}
-
 \section{Theoritical Bounds \\ for the Estimation Error}
 
 \begin{frame}{Estimation error}
@@ -352,6 +382,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \begin{itemize}
         \item Matrix completion is a imputing method for the missing $Y_{it}(0)$ where $(i,t)\in \mathcal{M}$.
         \item MC-NNM estimator is the generalization of many estimators such as DiD, ADH-SC, vertical or horizontal (penalized) regression , and interactive fixed effect model.
+        \item The critical differnce with previus estimators is that MC-NNM \alert{holistically restricts} the factors by regularization woth sparsity
         \item Practically, this estimator performs well with large $N$ and $T$, and allows for a relatively large number of factors.
         \item 
     \end{itemize}
