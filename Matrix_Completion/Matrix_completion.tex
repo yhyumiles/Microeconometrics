@@ -37,11 +37,49 @@
 
 \begin{frame}{What is "matrix completion" ?}
     \begin{itemize}
-        \item Matrix completion is an imputation method for the missing in the matrix.
-        \item 
-        \item Applying this idea to panel data analysis, this method is seen to a generalization of many model-based (factor-regression-based) panel methods.
+        \item Matrix completion (MC) is an imputation method for the missing in the matrix.
+        \item In PCA (Principle Compoent Analysis), given $M$ principle components, we approximate a true data matrix $\mathbf{Y}\in\mathbb{R}^{I\times J}$ by $\mathbf{A}\in\mathbb{R}^{I\times M}$ and $\mathbf{B}\in\mathbb{R}^{M\times J}$.
+        \[
+        \min_{\mathbf{A},\,\mathbf{B}}\left\{
+        \sum_{i=1}^{I}\sum_{j=1}^{J}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
+        \right\}
+        \]
+        \item If there is missing in matrix, using only observed data, we can approximate the original matrix, hence we can impute the missing by $\mathbf{\hat{A},\hat{B}}$.
+        \[
+        \min_{\mathbf{A},\,\mathbf{B}}\left\{
+        \sum_{(i,j)\in \mathcal{O}}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
+        \right\}
+        \]
+        \item Applying this idea to panel data analysis, MC-based panel method is seen to a generalization of many model-based (factor-regression-based) panel methods.
     \end{itemize}
 \end{frame}
+
+\begin{frame}{What is "Matrix Completion"?}
+    \begin{itemize}
+        \item Matrix completion (MC) is an imputation method for missing entries in a data matrix.
+        
+        \item In Principal Component Analysis (PCA), given the number of components $M$, we approximate a true data matrix $\mathbf{Y}\in\mathbb{R}^{I\times J}$ by the product of low-rank matrices $\mathbf{A}\in\mathbb{R}^{I\times M}$ and $\mathbf{B}\in\mathbb{R}^{M\times J}$:
+        \[
+        \min_{\mathbf{A},\,\mathbf{B}}\left\{
+        \sum_{i=1}^{I}\sum_{j=1}^{J}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
+        \right\}
+        \]
+
+        \item If there are missing entries, we solve the approximation problem using only observed entries $(i,j)\in\mathcal{O}$:
+        \[
+        \min_{\mathbf{A},\,\mathbf{B}}\left\{
+        \sum_{(i,j)\in \mathcal{O}}\left(Y_{ij}-\sum_{m=1}^{M}a_{im}b_{mj}\right)^2
+        \right\}
+        \]
+        Then, the missing entries $(i,j)\in\mathcal{M}$ can be imputed by:
+        \[
+        \hat{Y}_{ij}=\sum_{m=1}^{M}\hat{a}_{im}\hat{b}_{mj}
+        \]
+
+        \item Applying this idea to panel data analysis, MC-based methods generalize many factor-regression-based panel data models.
+    \end{itemize}
+\end{frame}
+
 
 \begin{frame}{Where to impute}
     \begin{itemize}
@@ -428,10 +466,21 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 \begin{frame}{Summary and Conclusion}
     \begin{itemize}
         \item Matrix completion is a imputing method for the missing $Y_{it}(0)$ where $(i,t)\in \mathcal{M}$.
-        \item MC-NNM estimator is the generalization of many estimators such as DiD, ADH-SC, vertical or horizontal (penalized) regression , and interactive fixed effect model.
-        \item The critical differnce with previus estimators is that MC-NNM \alert{holistically restricts} the factors by regularization with sparsity (Intrinsic factor vs Explicit factor)
+        \item MC-NNM estimator generalizes and nests many estimators such as DiD, ADH-SC, vertical or horizontal (penalized) regression, and interactive fixed effect model.
+        \item The critical differnce with previous DiD estimators is that MC-NNM \alert{holistically regularizes} latent factors through nuclear-norm minimization which induces a low-rank matrix (sparsity).
+        \begin{itemize}
+            \item Intrinsic factor vs. Explicitly imposed factor
+        \end{itemize}
+        \item Under appropriate conditions (low-rank structure, sufficient number of control units, sufficiently large $N,T$), the MC-NNM estimator achieves \alert{consistency}. 
         \item Practically, this estimator performs well with large $N$ and $T$, and allows for a relatively large number of factors.
-        \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Further extensions}
+    \begin{itemize}
+        \item To consider the model with covariates, we can separately include them in $\frac{1}{|\mathcal{O} |} ||\mathbf{P_{\mathcal{O} }}({\mathbf{Y}-\mathbf{AB}^{\mathsf{T}}-\gamma}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\delta^{\mathsf{T}})||_F^2$.
+        \item For further advanced developments, a recent study by Choi and Yuan (2024, JASA) proposes a debiased estimator for $\mathbf{L^*}$ with rigorous asymptotic inference (pointwise asymptotic normality). 
+        \item They introduce a \alert{cross-fitting} (sample-splitting) strategy and further propose group-based ATT estimators, extending the matrix completion literature toward causal inference with stronger theoretical guarantees.
     \end{itemize}
 \end{frame}
 
