@@ -78,6 +78,7 @@
         $
 
         →The rank (= number of factors) is \alert{FIXED !!}
+        \item MC panel method is a generalization of Xu's counterfactual estimation.
     \end{itemize}
 \end{frame}
 
@@ -243,11 +244,14 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
 \begin{frame}{Inference : CV and CI}
     \begin{itemize}
         \item The optimal value of $\lambda$ is selected through \alert{cross-validation}.
-        \begin{itemize}
-            \item 
-        \end{itemize}
         \item The theory of asymptotic distribution of $\mathbf{L^*}-\mathbf{\hat{L}}$ to construct CI has not yet developed.
         \item Instead, using resampling method, we see the fluctulation of the imputed matrix and construct CI like premutation methods in ADH-synthetic control method.
+        \begin{itemize}
+            \item Randomly select the subset $\mathcal{O}_k$ of $\mathcal{O} $ for $k=1,...,K$.
+            \item Then, using the sample in $ \mathcal{O}_k$, cauculate MC-NNM estimator $\hat{\mathbf{L}}^{(k)}$.
+            \item Finally, we construct a pointwise CI for $\{\hat{L}_{it}^{(k)}\}$.
+        \end{itemize}
+        \item However, according to Choi and Yuan(2024) which is the extended literature of Athey et al.(2021), their \alert{debiased} estimator for $\mathbf{L}^*$ is \alert{asymptotic normal} (but pointwisely).
     \end{itemize}
 \end{frame}
 
@@ -262,6 +266,8 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \[
         Q(\mathbf{Y}; R, \mathbf{A}, \mathbf{B}, \gamma, \delta)=\frac{1}{|\mathcal{O} |} ||\mathbf{P_{\mathcal{O} }}({\mathbb{Y}-\mathbf{AB}^{\mathsf{T}}-\gamma}\mathbf{1}_T^{\mathsf{T}}-\mathbf{1}_N\delta^{\mathsf{T}})||_F^2
         \]
+        \item However, there is no unique solution for $\mathbf{A, B}$ unless restrict them. \\
+        → Thus, we compare the \alert{restriction} of each methods.
     \end{itemize}
 \end{frame}
 
@@ -365,7 +371,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
     \end{itemize}
 \end{frame}
 
-\section{Two illustrations}
+\section{Empirical application}
 
 \begin{frame}{Comparing each method}
     \begin{itemize}
@@ -394,12 +400,6 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \end{itemize}
         \item (a) : VT-EN performs well on the whole, DiD is poor.
         \item (b) : MC-NNM is superior (large sample is favorable!), and VT-EN is generally poor.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Stock market data}
-    \begin{itemize}
-        \item 
     \end{itemize}
 \end{frame}
 
