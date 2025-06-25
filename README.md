@@ -31,7 +31,7 @@ DiDのcounterfactual matrixなんて縦にも横にも相関だらけなんだ�
 
 Soberingだったのが、逆にtreatment indiceの行列についても補完することができて、ATEなどもdata次第では推定できるのではないか、との話で、すごく可能性を感じた。しかし、通常のデータ状況の補完だと、missingの初期値を0にしたらcomputational errorがでてしまいそう。なぜなら、0が多いと、特異値が0になり、最小化問題の解になり続けるので。だとすると、初期値はmean imputation?（これもガチ数学論文で本質を理解する必要がある。）
 
-余談：説明がへたくそすぎる。人と喋ってない弊害出まくり。自分の頭の中だけで完結しており、上記のような本質的な階層構造に言及できず、質問に答える中で分かってしまった。理解が浅い。
+余談：説明がへたくそすぎる。人と喋ってない弊害出まくり。自分の頭の中だけで完結しており、上記のような本質的な階層構造に言及できず、質問に答える中で分かってしまった。理解が浅い。同じことがこのReadMeにも言えてナニコレというお気持ち。Twitterのつぶやきじゃないねん
 
 2. Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India, Econometrica.
 
