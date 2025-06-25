@@ -15,6 +15,8 @@ https://www.tandfonline.com/doi/full/10.1080/01621459.2021.1891924
 
 matrix completionとは、行列補完法で、行列の要素間の相関（factor構造）をimplicitに仮定することで、その関係から欠損値を浮かび上がらせる（行列が収束する＝implicitなfactorの関連度合いに辻褄があった状態）
 
+https://www.youtube.com/watch?v=MYKb5KcI55s&t=81s
+
 その意味で行列内の相関構造を余すことなく記述するわけであるから、penalized synthのように、synthetic controlの数を減らすのではなく、逆にすべてを利用してきれいに記述しようとする取り組みのように思える（coherenceの意味で）。（これに関してはCandes and Recht(2009)あたりのガチ数学論文を読んで本質を理解するしかない。）そもそもpenalized synthにおける正則化は推定の良さのためのもので、構造をとらえるための本質ではないためmatrix completionのほうが、もっと後の方で正則化しておりより解釈的にいいのではないか？
 
 →model-based factor modelにおいて最も抽象的かつ大域的な推定方法ではないか。
