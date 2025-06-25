@@ -98,9 +98,6 @@
 \begin{frame}{Notation and Estimand}
     \begin{itemize}
         \item Consider a setting with $N$ units observed over $T$ periods characterized by a binary treatment $W_{it}$ and hence two POs $Y_{it}(1), Y_{it}(0)$.
-        \begin{itemize}
-            \item $\mathbf{X}\in\R^{N\times P} \ , \  \mathbf{Z}\in\R^{T\times Q}$ : observe (unit / time)-specific covariance matrix
-        \end{itemize}
         \item Estimand : $\mathbf{Y} = \{Y_{it}(0)\footnote{以降は簡単のため，$Y_{it}(0)=Y_{it}$ とし，“(0)” を省略して表記する.}\}
         =
         \begin{pmatrix}
@@ -139,7 +136,7 @@ Y_{N1}(0) & \cdots & Y_{NT}(0)
         \forall (i,T)\in\mathcal{M} , \ \hat{Y}_{iT}=\hat{\beta}_0+\sum_{t=1}^{T-1}\hat{\beta}_tY_{it}, \ \text{where} \ \ \hat{\beta}=\arg\min_{\beta} \sum_{i:(i,T) \in \mathcal{O} }(Y_{iT}-\beta_0-\sum_{t=1}^{T-1}\beta_tY_{it})^2.
         \]
     \end{enumerate}
-    →Nonparametrically, 
+    →To make this more flexible and nonparametric, it leads to matching where we find for each treated unit $i$ a corresponding unit $j$ to approximate $Y_{it}$ by $Y_{jt}$ for $t=1,...,T-1$.
 \end{frame}
 
 \begin{frame}{Vertical regression and synthesis control : fat matrix ($T\gg N$)}
