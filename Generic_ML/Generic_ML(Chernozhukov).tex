@@ -21,6 +21,8 @@
 \newcommand{\Q}{\mathbb{Q}} 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\cov}{\text{Cov}}
+\newcommand{\var}{\text{Var}}
 
 \begin{document} 
 
@@ -35,13 +37,125 @@
 
 \section{Introduction}
 
-\begin{frame}{Today's Agenda}
+\begin{frame}{Motivation}
+    \begin{itemize}
+        \item When conducting RCT (Randomized Controlled Trails), reseachers and policy makers are often curious about not only ATE but also HTE (Heterogeneous Treatment Effects).
+        \item In such cases, ML methods are good for estimating
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Proposed estimator}
     \begin{itemize}
         \item 
     \end{itemize}
 \end{frame}
 
-\section{Set Up}
+\section{Main identification results and estimation strategies}
+
+\begin{frame}{BLP (Best Linear Predictor)}
+    \begin{itemize}
+        \item Firstly, we obtain the estimator $S(Z)$ for CATE $s_0(Z)$ by some ML method using the auxilirary samples $\mathcal{A} $.
+        \item BLP is defined as the projection of $s_0(Z)$ on the linear span of $1$ and $S(Z)$ in $L^2(P)$.
+        \[
+        \text{BLP}[s_0(Z)|S(Z)]=\arg\min_{f(Z)\in \text{Span}(1,S(Z))}\E[(s_0(Z)-f(Z))^2]
+        \]
+        \begin{itemize}
+            \item This equals to the solution of $\arg\min_{b_1,b_2}\E[(s_0(Z)-b_1-b_2 S(Z))^2]$. \\
+            → $\beta_1=\E[s_0(Z)], \beta_2=\frac{\cov(s_0(Z),S(Z))}{\var(S(Z))}$
+        \end{itemize}
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{First strategy : Weighted Residual BLP}
+    \begin{itemize}
+        \item Consider the regresson model with the moment condition as follows.
+        \begin{align*}
+            Y=\alpha'X_1&+\beta_1(D-p(Z))+\beta_2(D-p(Z))(S(Z)-\E[S(Z)])+\epsilon, \E[w(Z)\epsilon X]=0 \\
+            &\text{where} \  w(Z)=\frac{1}{p(Z)(1-p(Z))}, X=(X_1,X_2), \\ 
+            &X_1=(1,B(Z)),X_2=(D-p(Z),(D-p(Z)(S(Z)-\E[S(Z)]))).
+        \end{align*}
+        \begin{tcolorbox}[colframe=blue,title=Theorem 1]
+        \begin{itemize}
+            \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
+            \item Assume that $Y$ and $X$ have finite second moments, $\E[XX']$ is full rank, and $\var(S(Z))>0$.
+            \item Then, $(\beta_1, \beta_2)'=\arg\min_{b_1,b_2}\E[(s_0(Z)-b_1-b_2 S(Z))^2]$ (Identified)
+        \end{itemize}
+    \end{tcolorbox}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Second strategy : Horvitz-Thompson BLP}
+    \begin{itemize}
+        \begin{tcolorbox}[colframe=blue,title=Theorem 2]
+        \begin{itemize}
+            \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
+            \item Assume that $Y$ has finite second moments, $\E[\tilde{X}\tilde{X}']$ is finite and full rank, and $\var(S(Z))>0$.
+            \item Then, $(\beta_1, \beta_2)'=\arg\min_{b_1,b_2}\E[(s_0(Z)-b_1-b_2 S(Z))^2]$ (Identified)
+        \end{itemize}
+    \end{tcolorbox}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{GATES (sorted Group Average Treatment Effects)}
+    \begin{itemize}
+        \item Firstly, we build the groups by the estimated value $S(Z)$ of $s_0(Z)$.
+        \[
+        G_k=\{S(Z)\in I_k\}, k=1,...,K, I_k=[l_{k-1},l_k) : \text{disjoint}
+        \]
+        \item The estimand "GATES" is defined as $\E[s_0(Z)|G_k]$ for $k=1,...,K$.
+        
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Two strategies : Weihgted Residual and Horvitz-Thompson GATES}
+    \begin{itemize}
+        \item Consider the regression model with the moment condition as follows.
+        \begin{align*}
+            Y=\alpha'X_1&+\sum_{k=1}^{K}\gamma_k(D-p(Z))\mathbf{1}_{G_k}+\nu, \E[w(Z)\nu W]=0 \\
+            &\text{where} W=(X_1, W_2')', W_2=\{(D-p(Z))\mathbf{1}_{G_k}\}_{k=1}^K.
+        \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Identification of GATES}
+    \begin{itemize}
+        \begin{tcolorbox}[colframe=blue,title=Theorem 3]
+        \begin{itemize}
+            \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
+            \item Assume that $Y$ has finite second moments and  both $\E[WW']$ and $\E[\tilde{W}\tilde{W}']$ are finite and full rank.
+            \item Then, $\gamma=\{\gamma_k\}_{k=1}^K$ defined in two different ways are equivalent and identified.
+            \[
+            \gamma_k=\E[s_0(Z)|G_k]
+            \]
+        \end{itemize}
+    \end{tcolorbox}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{CLAN (Classification Analysis)}
+    \begin{itemize}
+        \item When BLP and GATES reveal substantial heterogeneity, it is interesting to know \alert{the properties of the subpopulations} that are most and least affected.
+        \begin{itemize}
+            \item We focus on the "least affected group" $G_1$ and "most affected group" $G_K$.
+        \end{itemize}
+        \item Let $g(Y,Z)$ be a vector of characteristics of an observational unit. The estimands are 
+        \[
+        \delta_1=\E[g(Y,Z)|G_1]\quad \text{and}\quad\delta_K=\E[g(Y,Z)|G_K]
+        \]
+        \item These parameters are identified with no assumption because they are just average of observed variables.
+        \item We compare $\delta_1$ and $\delta_K$ to detect (single out) the covariates which causes the heterogeneity.
+        \begin{itemize}
+            \item We can extend the comparison of not only averages but also variances or distributions.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{"Variational" estimation and inference methods}
+
+\section{Applicatoion}
+
+\section{Final marks}
 
 \section{References}
 
@@ -49,6 +163,7 @@
     \begin{itemize}
         \item Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), \textit{Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India}, Econometrica.
         \item Kosuke Imai and Michael Lingzhi Li (2025), \textit{Statistical Inference for Heterogeneous Treatment Effects Discovered by Generic Machine Learning in Randomized Experiments}, Journal of Business and Economic Statistics.
+        \item 末石直也 (2024), データ駆動型回帰分析, 日本評論社.
     \end{itemize}
 \end{frame}
 
