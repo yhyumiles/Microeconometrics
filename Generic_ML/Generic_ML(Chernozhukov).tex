@@ -179,23 +179,25 @@
 
 \begin{frame}{Splitting uncertainty in multiple splits}
     \begin{itemize}
+        \item For each data split $\{(a,m)\}$ such that $a\in \mathcal{A} $, we obtain estimators $\{\hat{\theta}_a|a\in\mathcal{A} \}$.
+        \begin{itemize}
+            \item Then, we take the median of it : $\hat{\theta}=M[\hat{\theta}_a|Data]$
+            \item Also, the $\beta$-quantile confidence interval is 
+            \[
+            [L,U] \  \text{where} \ L=Q_{\beta}(L_a|Data), U=Q_{1-\beta}(U_a|Data)
+            \]
+        \end{itemize}
+        \item Median and $\beta$-quantile achieves the \alert{concentration} property.
+        \begin{align*}
+            \E[|\hat{\theta}-\theta_0|]&\leq \E[|\hat{\theta}_a-\theta_0|] \ \text{for any} \ \hat{\theta}_a \\
+            \max\{\E[|U-\theta_0|], \E[|L-\theta_0|]\}&\leq \max\{\E[|U_a-\theta_0|], \E[|L_a-\theta_0|]\} \ \text{for any} \ U_a, L_a \\
+            |U-L|&\leq \sup_{a\in\mathcal{A} }|U_a-L_a|
+        \end{align*}
         \item 
     \end{itemize}
 \end{frame}
 
 \section{Causal machines that learn CATE better}
-
-\begin{frame}{Athey and Imbens (2016) : Resursive partitioning tree method}
-    \begin{itemize}
-        \item 
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Nie and Wager (2021) : R-learner}
-    \begin{itemize}
-        \item 
-    \end{itemize}
-\end{frame}
 
 \begin{frame}{Causal learners for Stage 1}
     \begin{itemize}
@@ -204,10 +206,10 @@
             \item BCA (Baseline Conditional Average) : $b_0(Z)=\E[Y(0)|Z]$
             \item CATE (Conditional Average Treatment Effect) : $s_0(Z)=\E[Y(1)-Y(0)|Z]$
         \end{itemize}
-        → solve \alert{either} of Weighted Residual (WR) learner or Horvitz-Thompson (HT) learner.
+        → \footnote{以後は簡単のため, $w(Z)=\frac{1}{p(Z)(1-p(Z))},H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$と表記する.}solve \alert{either} of Weighted Residual (WR) learner or Horvitz-Thompson (HT) learner.
         \begin{align*}
-            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \footnote{以後は簡単のため, $w(Z)=\frac{1}{p(Z)(1-p(Z))}$と表記する.}\frac{1}{p(Z_i)(1-p(Z_i))}\{Y_i-b(Z_i)-(D_i-p(Z_i))s(Z_i)\}^2 \\
-            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \{\footnote{以後は簡単のため, $H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$と表記する.}\frac{D_i-p(Z_i)}{p(Z_i)(1-p(Z_i))}(Y_i-b(Z_i))-s(Z_i)\}^2 
+            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \frac{1}{p(Z_i)(1-p(Z_i))}\{Y_i-b(Z_i)-(D_i-p(Z_i))s(Z_i)\}^2 \\
+            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \{\frac{D_i-p(Z_i)}{p(Z_i)(1-p(Z_i))}(Y_i-b(Z_i))-s(Z_i)\}^2 
         \end{align*}
         \begin{center}
             where $\mathcal{B}$ and $\mathcal{S}$ are functional parameter spaces
@@ -235,17 +237,26 @@
 
 \begin{frame}
     \begin{figure}
-            \includegraphics[width=1.5\textwidth, height=0.4\textheight, keepaspectratio]{PLvsCL(RF,NN).png}
-        \end{figure}
+        \includegraphics[width=1.5\textwidth, height=0.6\textheight, keepaspectratio]{PLvsCL(RF,NN).png}
+    \end{figure}
     \begin{itemize}
-        \item 
+        \item We compare the CATE learners derived from 
+        \begin{itemize}
+            \item the standard preditive Random Forest (RF) and Neural Network (NN)
+            \item Causal Learners (CL) from RF and NN that solve the objective function
+        \end{itemize}
+        \item We find that the causal learners (CL) are better approximating the CATE function.
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \begin{figure}
-            \includegraphics[width=1.5\textwidth, height=0.4\textheight, keepaspectratio]{PLvsCL(OLS,CF).png}
-        \end{figure}
+        \includegraphics[width=1.5\textwidth, height=0.6\textheight, keepaspectratio]{PLvsCL(OLS,CF).png}
+    \end{figure}
+    \begin{itemize}
+        \item We can improve the standard predictive OLS by the causal OLS taht solves the objective function.
+        \item Also, improve the causal forest by a causal boosting step that solves the objective function.
+    \end{itemize}
 \end{frame}
 
 \section{Implementation Details}
