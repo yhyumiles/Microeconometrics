@@ -46,7 +46,17 @@
 
 \begin{frame}{Proposed estimator}
     \begin{itemize}
-        \item 
+        \item Let $(M,A)$ denote a random partition of $\{1,...,N\}$.
+        \item Stage 1 : From the auxilirary samlple $A$, we obtain ML estimators of BCA and CATE $z\mapsto B(z)$ and $z\mapsto S(z)$.
+        \begin{itemize}
+            \item These estimators are (of course) biased and noisy. (but it is okay !) 
+        \end{itemize}
+        \item Stage 2 : From the main sample $M$, we focus on the \alert{feature} of CATE.
+        \begin{itemize}
+            \item Best Linear Preditor (BLP) of the CATE
+            \item Sorted Group Average Treatment Effects (GATES) : average of CATE in group
+            \item Classification Analysis (CLAN) : compare the most and least affected group
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -87,6 +97,10 @@
 
 \begin{frame}{Second strategy : Horvitz-Thompson BLP}
     \begin{itemize}
+        \item Horvitz-Thompson transformed response $TH$ such that $H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$ provides an unbiased signal about CATE : $\E[YH|Z]=s_0(Z)$
+        \[
+        YH=\mu'X_1H+\beta_1+\beta_2(S(Z)-\E[S(Z)])+\epsilon, \ \E[\epsilon\tilde{X}]=0
+        \]
         \begin{tcolorbox}[colframe=Cyan,title=Theorem 2]
         \begin{itemize}
             \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
@@ -261,19 +275,26 @@
 
 \section{Implementation Details}
 
-\begin{frame}{Inference algorithm 1}
+\begin{frame}{Inference algorithm}
     \begin{enumerate}
-        \item 
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{Inference algorithm 2}
-    \begin{enumerate}
-        \item 
+        \item Split the sample into the main sample $M$ and the auxilirary sample $A$.
+        \item Using $A$, train each (optional) ML method and output prediction $B$ (BCA) and $S$ (CATE) for $M$.
+        \item Estimate BLP, GATES and CLAN using $M$.
+        \item If the winning ML methods were not chosen, we chose the best-of-fit in median-aggregated estimator $\hat{\theta}$. (e.g. cross-varidation)
+        \item Compute and report quantile-aggregated point-estimate, p-values, and confidence intervals.
     \end{enumerate}
 \end{frame}
 
 \section{Final marks}
+
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item We focus the estimation of HTE, which is usually biased and inconsistent.
+        \item Thus, we use ML method for proxying CATE, then, feature just best linear predictor, which is easy to interpret.
+        \item This agnostic approach enables us to be valid in high-dimension, not to make strong assumption, and to avoid over-fitting.
+        \item For sample splitting, we take a median for robustness.
+    \end{itemize}
+\end{frame}
 
 \section{References}
 
