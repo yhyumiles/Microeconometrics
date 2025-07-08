@@ -26,7 +26,7 @@
 
 \begin{document} 
 
-\title{Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India \\ \small{Victor Chernozhukov et al. (2024), Econometrica.}}
+\title{Fisher-Schultz Lecture: Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India \\ \small{Victor Chernozhukov et al. (2025), Econometrica (forthcoming).}}
 \author{Naoki Eguchi}          
 \institute{Faculty of Medicine, Kyoto University} 
 \date{2025.7.9 ミクロ計量経済学}
@@ -75,7 +75,7 @@
             &\text{where} \  w(Z)=\frac{1}{p(Z)(1-p(Z))}, X=(X_1,X_2), \\ 
             &X_1=(1,B(Z)),X_2=(D-p(Z),(D-p(Z)(S(Z)-\E[S(Z)]))).
         \end{align*}
-        \begin{tcolorbox}[colframe=RoyalBlue,title=Theorem 1]
+        \begin{tcolorbox}[colframe=Cyan,title=Theorem 1]
         \begin{itemize}
             \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
             \item Assume that $Y$ and $X$ have finite second moments, $\E[XX']$ is full rank, and $\var(S(Z))>0$.
@@ -87,7 +87,7 @@
 
 \begin{frame}{Second strategy : Horvitz-Thompson BLP}
     \begin{itemize}
-        \begin{tcolorbox}[colframe=SkyBlue,title=Theorem 2]
+        \begin{tcolorbox}[colframe=Cyan,title=Theorem 2]
         \begin{itemize}
             \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
             \item Assume that $Y$ has finite second moments, $\E[\tilde{X}\tilde{X}']$ is finite and full rank, and $\var(S(Z))>0$.
@@ -120,7 +120,7 @@
 
 \begin{frame}{Identification of GATES}
     \begin{itemize}
-        \begin{tcolorbox}[colframe=SkyBlue,title=Theorem 3]
+        \begin{tcolorbox}[colframe=Cyan,title=Theorem 3]
         \begin{itemize}
             \item Consider $z\mapsto S(z)$ and $z\mapsto B(z)$ as fixed maps. (known function)
             \item Assume that $Y$ has finite second moments and  both $\E[WW']$ and $\E[\tilde{W}\tilde{W}']$ are finite and full rank.
@@ -161,26 +161,106 @@
             \item \alert{Estimation uncertainty} regarding the parameter $\theta$, conditional on the data subpopulations
             \item Uncertainty or "variation" \alert{induced by the data splitting}
         \end{itemize}
-        \item Actually, estimation uncertainty is a standard topic, so, as usual, we solve this problem by the \alert{Gaussian approximation} to construct a confidence interval.
+        \item Actually, estimation uncertainty is a standard topic, so, as usual, we can solve this problem by the \alert{Gaussian approximation} to construct a confidence interval.
         \item On the other hands, data-splitting uncertainty is a novel topic, which is solved by taking a \alert{median} of any estimators in permuated splitting. 
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Estimation uncertainty in single split}
     \begin{itemize}
-        \item Consider a sample split 
+        \item Consider a sample split $\{(a,m)\}$ of $\{1,...,N\}$ with $|a|=N-n, |m|=n$.
+        \item All estimators $\theta_a$ satisfies the sufficient conditions for being approxmately Gaussian, conditionally on $Data_a$.
+        \[
+        P(\frac{\hat{\theta_a}-\theta_a}{\hat{\sigma_a}}<z|Data_a) \to \Phi(z) \ \text{for} \ z\in\R, \ \text{as} \ N \ \text{and} \ n\to\infty
+        \]
+        \item 
     \end{itemize}
 \end{frame}
 
-\section{Causal machines that learn CATE better}
-
-\begin{frame}
+\begin{frame}{Splitting uncertainty in multiple splits}
     \begin{itemize}
         \item 
     \end{itemize}
 \end{frame}
 
-\section{Applicatoion}
+\section{Causal machines that learn CATE better}
+
+\begin{frame}{Athey and Imbens (2016) : Resursive partitioning tree method}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Nie and Wager (2021) : R-learner}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Causal learners for Stage 1}
+    \begin{itemize}
+        \item In Stage 1, using the auxilirary sample $A$, we estimate 
+        \begin{itemize}
+            \item BCA (Baseline Conditional Average) : $b_0(Z)=\E[Y(0)|Z]$
+            \item CATE (Conditional Average Treatment Effect) : $s_0(Z)=\E[Y(1)-Y(0)|Z]$
+        \end{itemize}
+        → solve \alert{either} of Weighted Residual (WR) learner or Horvitz-Thompson (HT) learner.
+        \begin{align*}
+            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \footnote{以後は簡単のため, $w(Z)=\frac{1}{p(Z)(1-p(Z))}$と表記する.}\frac{1}{p(Z_i)(1-p(Z_i))}\{Y_i-b(Z_i)-(D_i-p(Z_i))s(Z_i)\}^2 \\
+            &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \{\footnote{以後は簡単のため, $H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$と表記する.}\frac{D_i-p(Z_i)}{p(Z_i)(1-p(Z_i))}(Y_i-b(Z_i))-s(Z_i)\}^2 
+        \end{align*}
+        \begin{center}
+            where $\mathcal{B}$ and $\mathcal{S}$ are functional parameter spaces
+        \end{center}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Oracle properties of the population objective functions}
+    \begin{itemize}
+        \begin{tcolorbox}[colframe=Cyan,title=Theorem 4]
+        \begin{itemize}
+            \item Suppose $Y, b(Z), s(Z), w(Z) \in L^2$ (2乗可積分).
+            \item Then, the expectation of the loss functions can be decomposed 
+            \begin{align*}
+                &\E[w(Z)\{Y-b(Z)-(D-p(Z))s(Z)\}^2]=\E[(s_0(Z)-s(Z))^2]+C_{ib} \\
+                &\E[(H(Y-b(Z)-s(Z)))^2]=\E[(s_0(Z)-s(Z))^2]+C_{2b}
+            \end{align*}
+            where $C_{1b}=\E[w(Z)(\tilde{b}_0(Z)-b(Z))^2]+C_1, C_{1b}=\E[w(Z)(\bar{b}_0(Z)-b(Z))^2]+C_2$
+        \end{itemize}
+    \end{tcolorbox}
+    \item This theorem shows that the minimizers provide the best approxmation for $s_0(Z)$ in the sense of mean-squared error in the class $\mathcal{S} $.
+    \item Moreover, this occurs even though we do not know $s_0(Z)$. (oracle!)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=1.5\textwidth, height=0.4\textheight, keepaspectratio]{PLvsCL(RF,NN).png}
+        \end{figure}
+    \begin{itemize}
+        \item 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+            \includegraphics[width=1.5\textwidth, height=0.4\textheight, keepaspectratio]{PLvsCL(OLS,CF).png}
+        \end{figure}
+\end{frame}
+
+\section{Implementation Details}
+
+\begin{frame}{Inference algorithm 1}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Inference algorithm 2}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{frame}
 
 \section{Final marks}
 
@@ -188,11 +268,11 @@
 
 \begin{frame}{References}
     \begin{itemize}
-        \item Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), \textit{Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India}, Econometrica.
+        \item Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2025), \textit{Fisher-Schultz Lecture: Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India}, Econometrica (forthcoming).
         \item Xinkun Nie, Stefan Wager (2021), \textit{Quasi-Oracle Estimation of Heterogeneous Treatment Effects}, Biometrika.
         \item Susan Athey, Guido Imbens (2016), \textit{Recursive partitioning for heterogeneous causal effects}, Proceedings of the National Academy of Sciences. 
-        \item Kosuke Imai and Michael Lingzhi Li (2025), \textit{Statistical Inference for Heterogeneous Treatment Effects Discovered by Generic Machine Learning in Randomized Experiments}, Journal of Business and Economic Statistics.
-        \item 末石直也 (2024), データ駆動型回帰分析, 日本評論社.
+        \item Kosuke Imai and Michael Lingzhi Li (2025), \textit{Statistical Inference for Heterogeneous Treatment Effects Discovered by Generic Machine Learning in Randomized Experiments}, Journal of Business and Economic Statistics. 
+        \item 金本拓 (2024), 因果推論ー基礎からの機械学習・時系列解析・因果探索を用いた意思決定のアプローチー, オーム社. (主に5章)
     \end{itemize}
 \end{frame}
 
