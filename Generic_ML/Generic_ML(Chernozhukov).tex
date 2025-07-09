@@ -41,6 +41,9 @@
     \begin{itemize}
         \item When conducting RCT (Randomized Controlled Trails), reseachers and policy makers are often curious about not only ATE but also HTE (Heterogeneous Treatment Effects).
         \item In such cases, ML methods are good for estimating CATE but inconsistent in most cases especially high-dimension ($d>\log N$)
+        \item Also, we have a difficulty of getting uniformly valid inference.
+        \item Lasso-based methods are not a magic bullet in that regularization bias and untestable assumption occurs.
+        \item Consider the conditional unconfoundedness setting such that $D\indep (Y(1),Y(0))|Z$ and the propensity score $p(Z)=P[D=1|Z]\in (0,1)$ is known.
     \end{itemize}
 \end{frame}
 
