@@ -40,7 +40,7 @@
 \begin{frame}{Motivation}
     \begin{itemize}
         \item When conducting RCT (Randomized Controlled Trails), reseachers and policy makers are often curious about not only ATE but also HTE (Heterogeneous Treatment Effects).
-        \item In such cases, ML methods are good for estimating
+        \item In such cases, ML methods are good for estimating CATE but inconsistent in most cases especially high-dimension ($d>\log N$)
     \end{itemize}
 \end{frame}
 
@@ -195,7 +195,11 @@
         \[
         P(\frac{\hat{\theta_a}-\theta_a}{\hat{\sigma_a}}<z|Data_a) \to \Phi(z) \ \text{for} \ z\in\R, \ \text{as} \ N \ \text{and} \ n\to\infty
         \]
-        \item 
+        \item Therefore, the confidence interval represents
+        \[
+        [L_a, U_a]=[\hat{\theta}_a\pm \Phi^{-1}(1-\frac{\alpha}{2})\hat{\sigma}_a]
+        \]
+        \item We have straightforward inference conditional on a sigle data split.
     \end{itemize}
 \end{frame}
 
@@ -215,7 +219,7 @@
             \max\{\E[|U-\theta_0|], \E[|L-\theta_0|]\}&\leq \max\{\E[|U_a-\theta_0|], \E[|L_a-\theta_0|]\} \ \text{for any} \ U_a, L_a \\
             |U-L|&\leq \sup_{a\in\mathcal{A} }|U_a-L_a|
         \end{align*}
-        \item 
+        \item By taking the median or quantile, we have a kind of robustness. 
     \end{itemize}
 \end{frame}
 
