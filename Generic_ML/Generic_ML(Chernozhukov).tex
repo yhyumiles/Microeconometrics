@@ -100,7 +100,7 @@
 
 \begin{frame}{Second strategy : Horvitz-Thompson BLP}
     \begin{itemize}
-        \item Horvitz-Thompson transformed response $TH$ such that $H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$ provides an unbiased signal about CATE : $\E[YH|Z]=s_0(Z)$
+        \item Horvitz-Thompson transformed response $YH$ such that $H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$ provides an unbiased signal about CATE : $\E[YH|Z]=s_0(Z)$
         \begin{align*}
             YH&=\mu'X_1H+\beta_1+\beta_2(S(Z)-\E[S(Z)])+\epsilon, \ \E[\epsilon\tilde{X}]=0 \\
             &\text{where} \ X_1=(1,B(Z),p(Z)S(Z))' \  \tilde{X}=(X_1'H, 1, S(Z)-\E[S(Z)])
