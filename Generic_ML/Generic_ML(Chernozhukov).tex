@@ -235,7 +235,7 @@
             \item BCA (Baseline Conditional Average) : $b_0(Z)=\E[Y(0)|Z]$
             \item CATE (Conditional Average Treatment Effect) : $s_0(Z)=\E[Y(1)-Y(0)|Z]$
         \end{itemize}
-        → \footnote{以後は簡単のため, $w(Z)=\frac{1}{p(Z)(1-p(Z))},H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$と表記する.}solve \alert{either} of Weighted Residual (WR) learner or Horvitz-Thompson (HT) learner.
+        → solve \alert{either} of Weighted Residual (WR) learner or Horvitz-Thompson (HT) learner.
         \begin{align*}
             &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \frac{1}{p(Z_i)(1-p(Z_i))}\{Y_i-b(Z_i)-(D_i-p(Z_i))s(Z_i)\}^2 \\
             &(B,S)\in \arg\min_{b\in\mathcal{B} , s\in\mathcal{S} }\sum_{i\in A} \{\frac{D_i-p(Z_i)}{p(Z_i)(1-p(Z_i))}(Y_i-b(Z_i))-s(Z_i)\}^2 
@@ -243,6 +243,7 @@
         \begin{center}
             where $\mathcal{B}$ and $\mathcal{S}$ are functional parameter spaces
         \end{center}
+        \item 以後は簡単のため, $w(Z)=\frac{1}{p(Z)(1-p(Z))},H=\frac{D-p(Z)}{p(Z)(1-p(Z))}$と表記する.
     \end{itemize}
 \end{frame}
 
