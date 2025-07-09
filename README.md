@@ -31,8 +31,22 @@ DiDのcounterfactual matrixなんて縦にも横にも相関だらけなんだ�
 
 Soberingだったのが、逆にtreatment indiceの行列についても補完することができて、ATEなどもdata次第では推定できるのではないか、との話で、すごく可能性を感じた。しかし、通常のデータ状況の補完だと、missingの初期値を0にしたらcomputational errorがでてしまいそう。なぜなら、0が多いと、特異値が0になり、最小化問題の解になり続けるので。だとすると、初期値はmean imputation?（これもガチ数学論文で本質を理解する必要がある。）
 
+https://www.youtube.com/watch?v=2m1l9F0TCKk
+
 余談：説明がへたくそすぎる。人と喋ってない弊害出まくり。自分の頭の中だけで完結しており、上記のような本質的な階層構造に言及できず、質問に答える中で分かってしまった。理解が浅い。同じことがこのReadMeにも言えてナニコレというお気持ち。Twitterのつぶやきじゃないねん
 
 2. Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India, Econometrica.
 
 https://economics.mit.edu/sites/default/files/2022-08/2020.12%20HeterogTE-RE-v26.pdf
+
+Machine learning method-based CATE estimationというのは、基本的に一致性を満たさず（高次元において）、inferenceが複雑（特に一様な推論は厳しい）ということが問題点に挙げられる。その問題を1段階目の推定で、MLの点推定としての強みを生かして、CATEを大域的に推定し、2段階目で、overfitした部分を線形射影によって、バラツキを吸収しつつ推定することで、ある種、複雑度が小さくなり（VC-dimension, Rademacher complexity）、一致性を満たすようになる。（ほんでここ嘘ついてもうたやないかい、線形回帰のほうがより推定量の最終的な意味での一致性（これはriskが漸近的に小さくなることであり、misspecified modelだと厳密な意味での一致性にはならないことに注意！）に対して本質的、やからあの最初のfigureがあってん）
+
+さらにinferenceの部分に関しては、線形回帰推定量のGaussian approximationによって通常通りサンドウィッチの分散でCIが容易に作れる。（うれしい）
+
+2段階推定の弱みであるsample splitのuncertaintyに対しては、推定量をpermuateしてそのmedianを取ることで解消され、それはまたOracle propertyを満たす。（これも一致性に関わってくるが、consistencyに代わって重要視されている）
+
+なんか機械学習のメソッドってoverfittingの問題が結構怖いんかな。もしそれが恐ろしいレベルで起こってるなら、この2段階推定は画期的ではある。話にもでたけど、実務家への売り込みではcausal forestのように異質性がvisualizeされず、ただ定量化されるだけだからウケが悪そう。でもこうするしかないもんな。CLANの方に期待するしかないね。
+
+https://www.youtube.com/watch?v=wNkrJkDwxwE&t=2780s
+
+余談：話もシンプルで全部説明できた。今回軽めのスライド20枚でちょうど40分使ったので、前回レベルの重みのスライドだと10枚くらいが限度ではないか。それにしても話が冗長で涙止まらん
