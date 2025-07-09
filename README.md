@@ -31,6 +31,8 @@ DiDのcounterfactual matrixなんて縦にも横にも相関だらけなんだ�
 
 Soberingだったのが、逆にtreatment indiceの行列についても補完することができて、ATEなどもdata次第では推定できるのではないか、との話で、すごく可能性を感じた。しかし、通常のデータ状況の補完だと、missingの初期値を0にしたらcomputational errorがでてしまいそう。なぜなら、0が多いと、特異値が0になり、最小化問題の解になり続けるので。だとすると、初期値はmean imputation?（これもガチ数学論文で本質を理解する必要がある。）
 
+https://www.youtube.com/watch?v=2m1l9F0TCKk
+
 余談：説明がへたくそすぎる。人と喋ってない弊害出まくり。自分の頭の中だけで完結しており、上記のような本質的な階層構造に言及できず、質問に答える中で分かってしまった。理解が浅い。同じことがこのReadMeにも言えてナニコレというお気持ち。Twitterのつぶやきじゃないねん
 
 2. Victor Chernozhukov, Mert Demirer, Esther Duflo, and Iván Fernández-Val (2024), Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India, Econometrica.
@@ -44,5 +46,7 @@ Machine learning method-based CATE estimationというのは、基本的に一�
 2段階推定の弱みであるsample splitのuncertaintyに対しては、推定量をpermuateしてそのmedianを取ることで解消され、それはまたOracle propertyを満たす。（これも一致性に関わってくるが、consistencyに代わって重要視されている）
 
 なんか機械学習のメソッドってoverfittingの問題が結構怖いんかな。もしそれが恐ろしいレベルで起こってるなら、この2段階推定は画期的ではある。話にもでたけど、実務家への売り込みではcausal forestのように異質性がvisualizeされず、ただ定量化されるだけだからウケが悪そう。でもこうするしかないもんな。CLANの方に期待するしかないね。
+
+https://www.youtube.com/watch?v=wNkrJkDwxwE&t=2780s
 
 余談：話もシンプルで全部説明できた。今回軽めのスライド20枚でちょうど40分使ったので、前回レベルの重みのスライドだと10枚くらいが限度ではないか。それにしても話が冗長で涙止まらん
